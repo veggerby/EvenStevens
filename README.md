@@ -2,6 +2,11 @@
 
 > _The world's most overengineered, AI-powered, event-sourced, distributed parity detection system._
 
+> ⚠️ **Disclaimer**
+> Portions of this project, including code and architectural patterns, were generated with the assistance of AI models (e.g., OpenAI's GPT-4 and GitHub Copilot). While reviewed and modified by humans, this repository reflects a hybrid of automated and manual authorship.
+> This project is intentionally and unapologetically overengineered — it is meant as a joke, parodying enterprise architectures by taking a simple task (checking if a number is even) and turning it into an infrastructure-heavy, AI-driven microservice extravaganza.
+
+
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Build](https://img.shields.io/github/actions/workflow/status/your-org/evenstevens/ci.yml)
 ![GPT-Verified](https://img.shields.io/badge/evenness-GPT--Certified-blue)
@@ -40,9 +45,7 @@ But where’s the **fun**, **complexity**, and **infrastructure budget burn** in
 
 ## 🏗️ Architecture
 
-![EvenStevens Architecture Diagram](./docs/images/evenstevens-architecture.png)
-
-(see [`/docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) for full documentation)
+See [`/docs/architecture.md`](./docs/architecture.md) for full documentation
 
 ---
 

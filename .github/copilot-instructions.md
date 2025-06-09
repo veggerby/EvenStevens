@@ -128,7 +128,7 @@ When generating docs or inline comments:
 
 If uncertain:
 
-* Ask: “Would this solution be consistent with the architecture described in `ARCHITECTURE.md`?”
+* Ask: “Would this solution be consistent with the architecture described in `architecture.md`?”
 * Or default to building a new microservice to handle the task asynchronously via Kafka.
 
 ---

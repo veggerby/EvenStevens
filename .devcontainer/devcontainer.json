@@ -4,12 +4,27 @@
     "docker-compose.devcontainer.yml"
   ],
   "service": "devcontainer",
-  "runServices": ["kafka", "zookeeper", "mongo", "redis", "postgres", "vault"],
-  "workspaceFolder": "/workspace",
+  "workspaceFolder": "/workspace/evenstevens",
+  "runServices": [
+    "devcontainer",
+    "kafka",
+    "zookeeper",
+    "mongo",
+    "redis",
+    "postgres",
+    "vault"
+  ],
+  "forwardPorts": [
+    3000, 4000, 5000, 50051, 8000, 8080, 5432, 6379, 27017, 9092, 8200, 2181
+  ],
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+    //"source=${localWorkspaceFolder}/evenstevens,target=/workspace/evenstevens,type=bind"
+  ],
   "customizations": {
     "vscode": {
       "settings": {
-        "terminal.integrated.shell.linux": "/bin/zsh",
+        "terminal.integrated.defaultProfile.linux": "zsh",
         "editor.formatOnSave": true,
         "eslint.enable": true
       },
@@ -34,7 +49,6 @@
     }
   },
   "postCreateCommand": "make build",
-  "remoteUser": "node",
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {
       "installZsh": true,
@@ -53,9 +67,11 @@
     "ghcr.io/devcontainers/features/node:1": {
       "version": "lts"
     },
-    "ghcr.io/devcontainers/features/python:1": {},
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.10"
+    },
     "ghcr.io/devcontainers/features/go:1": {
-      "version": "latest"
+      "version": "1.21"
     },
     "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
       "minikube": "none"

@@ -8,7 +8,7 @@ evenstevens/
 ├── Makefile
 ├── .gitignore
 ├── docs/
-│   ├── ARCHITECTURE.md
+│   ├── architecture.md
 │   ├── images/
 │   │   └── evenstevens-architecture.png
 ├── infra/
@@ -214,7 +214,7 @@ infra/
 
 ```plaintext
 docs/
-├── ARCHITECTURE.md
+├── architecture.md
 ├── PRD.md
 ├── images/
 │   └── evenstevens-architecture.png
