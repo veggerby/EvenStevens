@@ -1,0 +1,17 @@
+# .gitignore
+.env
+openai.env
+node_modules/
+__pycache__/
+dist/
+build/
+.DS_Store
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+coverage/
+*.log
+.idea/
+.vscode/
+.env.*

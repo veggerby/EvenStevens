@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-evaluator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-evaluator
+  template:
+    metadata:
+      labels:
+        app: ai-evaluator
+    spec:
+      containers:
+        - name: ai-evaluator
+          image: evenstevens-ai-evaluator:latest
+          ports:
+            - containerPort: 8000

@@ -1,0 +1,17 @@
+// ...existing code...
+// JSON schema for ParityDeterminedEvent in EvenStevens™
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ParityDeterminedEvent",
+  "type": "object",
+  "properties": {
+    "number": { "type": "integer" },
+    "isEven": { "type": "boolean" },
+    "evaluatedBy": { "type": "string" },
+    "confidence": { "type": "number" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "rawAiResponse": { "type": "string" }
+  },
+  "required": ["number", "isEven", "evaluatedBy", "confidence", "timestamp", "rawAiResponse"]
+}
+// ...existing code...

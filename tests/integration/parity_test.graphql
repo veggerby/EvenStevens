@@ -1,0 +1,13 @@
+# GraphQL test for EvenStevens™
+mutation {
+  evaluateIsEven(number: 42)
+}
+
+query {
+  parityOf(number: 42) {
+    isEven
+    evaluatedBy
+    timestamp
+    rawAiResponse
+  }
+}

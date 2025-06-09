@@ -1,0 +1,6 @@
+# EvenStevens™ Helm Chart stub
+apiVersion: v2
+name: evenstevens
+version: 0.1.0
+appVersion: "1.0.0"
+description: Helm chart for deploying EvenStevens™

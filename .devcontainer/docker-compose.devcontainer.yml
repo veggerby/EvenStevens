@@ -1,0 +1,80 @@
+version: '3.8'
+services:
+  devcontainer:
+    image: mcr.microsoft.com/devcontainers/base:bookworm
+    command: sleep infinity
+    volumes:
+      - ..:/workspace:cached
+      # mTLS certs for service-to-service communication (stubbed for dev)
+      - ../infra/certs:/certs:ro
+      # Vault token for dev (stubbed)
+      - ../infra/vault/dev-root-token.txt:/vault/token:ro
+      # Auth0 JWKS cache (simulated)
+      - ../infra/auth0/jwks-cache:/jwks-cache
+      # Blockchain audit log
+      - ../infra/audit:/audit
+      # Custom linter rules (e.g., no-modulo linter)
+      - ../shared/utils/noModuloLinter.js:/linter/noModuloLinter.js:ro
+    environment:
+      - NODE_ENV=development
+      - KAFKA_BROKER=kafka:9092
+      - AUTH0_DOMAIN=${AUTH0_DOMAIN}
+      - AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID}
+      - AUTH0_CLIENT_SECRET=${AUTH0_CLIENT_SECRET}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - MONGO_URI=mongodb://mongo:27017/evenstevens
+      - REDIS_URL=redis://redis:6379
+      - POSTGRES_URL=postgres://postgres:password@postgres:5432/evenstevens
+      - VAULT_ADDR=http://vault:8200
+      - MTLS_CERT_PATH=/certs/devcontainer.crt
+      - MTLS_KEY_PATH=/certs/devcontainer.key
+      - VAULT_TOKEN_FILE=/vault/token
+      - AUTH0_JWKS_URI=https://$AUTH0_DOMAIN/.well-known/jwks.json
+      - JWKS_CACHE_PATH=/jwks-cache
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
+      - BLOCKCHAIN_AUDIT_LOG_PATH=/audit/audit.log
+      - LINTER_RULES_PATH=/linter/noModuloLinter.js
+      - SARCASM_LOGGING_MODE=enabled
+    depends_on:
+      - kafka
+      - zookeeper
+      - mongo
+      - redis
+      - postgres
+      - vault
+  kafka:
+    image: bitnami/kafka:3.5
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+  zookeeper:
+    image: bitnami/zookeeper:3.8
+    ports:
+      - "2181:2181"
+  mongo:
+    image: mongo:6
+    ports:
+      - "27017:27017"
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: evenstevens
+    ports:
+      - "5432:5432"
+  vault:
+    image: hashicorp/vault:1.13
+    ports:
+      - "8200:8200"
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: root

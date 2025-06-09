@@ -1,0 +1,19 @@
+// ...existing code...
+// This file defines the gRPC interface for querying parity results in the EvenStevens™ system.
+syntax = "proto3";
+
+service ParityService {
+  rpc GetParity (ParityRequest) returns (ParityResponse);
+}
+
+message ParityRequest {
+  int32 number = 1;
+}
+
+message ParityResponse {
+  bool isEven = 1;
+  string evaluatedBy = 2;
+  string rawResponse = 3;
+  string timestamp = 4;
+}
+// ...existing code...

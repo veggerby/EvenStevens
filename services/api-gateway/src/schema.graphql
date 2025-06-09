@@ -1,0 +1,14 @@
+type Mutation {
+  evaluateIsEven(number: Int!): Boolean!
+}
+
+type Query {
+  parityOf(number: Int!): ParityResult
+}
+
+type ParityResult {
+  isEven: Boolean!
+  evaluatedBy: String!
+  timestamp: String!
+  rawAiResponse: String!
+}

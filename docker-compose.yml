@@ -1,0 +1,91 @@
+# docker-compose.yml
+version: '3.8'
+services:
+  kafka:
+    image: bitnami/kafka:3.5
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+  zookeeper:
+    image: bitnami/zookeeper:3.8
+    ports:
+      - "2181:2181"
+  mongo:
+    image: mongo:6
+    ports:
+      - "27017:27017"
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: evenstevens
+    ports:
+      - "5432:5432"
+  vault:
+    image: hashicorp/vault:1.13
+    ports:
+      - "8200:8200"
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: root
+  api-gateway:
+    build: ./services/api-gateway
+    environment:
+      - NODE_ENV=development
+      - KAFKA_BROKER=kafka:9092
+      - AUTH0_DOMAIN=${AUTH0_DOMAIN}
+      - AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID}
+      - AUTH0_CLIENT_SECRET=${AUTH0_CLIENT_SECRET}
+    ports:
+      - "4000:4000"
+    depends_on:
+      - kafka
+  command-handler:
+    build: ./services/command-handler
+    environment:
+      - KAFKA_BROKER=kafka:9092
+      - MONGO_URI=mongodb://mongo:27017/evenstevens
+    depends_on:
+      - kafka
+      - mongo
+      - ai-evaluator
+  ai-evaluator:
+    build: ./services/ai-evaluator
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      - kafka
+  projector:
+    build: ./services/projector
+    environment:
+      - KAFKA_BROKER=kafka:9092
+      - REDIS_URL=redis://redis:6379
+      - POSTGRES_URL=postgres://postgres:password@postgres:5432/evenstevens
+    depends_on:
+      - kafka
+      - redis
+      - postgres
+  query-api:
+    build: ./services/query-api
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - POSTGRES_URL=postgres://postgres:password@postgres:5432/evenstevens
+    ports:
+      - "50051:50051"
+    depends_on:
+      - projector
+  frontend:
+    build: ./services/frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api-gateway

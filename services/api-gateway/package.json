@@ -1,0 +1,21 @@
+{
+  "name": "evenstevens-api-gateway",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "lint": "eslint . --ext .ts",
+    "test": "jest"
+  },
+  "dependencies": {
+    "apollo-server": "^3.11.1",
+    "kafkajs": "^2.2.4",
+    "jsonwebtoken": "^9.0.0"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4",
+    "eslint": "^8.38.0",
+    "jest": "^29.5.0"
+  }
+}

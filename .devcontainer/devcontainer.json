@@ -1,0 +1,77 @@
+{
+  "name": "evenstevens-devcontainer",
+  "dockerComposeFile": [
+    "docker-compose.devcontainer.yml"
+  ],
+  "service": "devcontainer",
+  "runServices": ["kafka", "zookeeper", "mongo", "redis", "postgres", "vault"],
+  "workspaceFolder": "/workspace",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/zsh",
+        "editor.formatOnSave": true,
+        "eslint.enable": true
+      },
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "ms-vscode-remote.remote-containers",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-python.python",
+        "golang.go",
+        "ms-vscode.makefile-tools",
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "EditorConfig.EditorConfig",
+        "streetsidesoftware.code-spell-checker",
+        "redhat.vscode-yaml",
+        "bierner.markdown-mermaid",
+        "humao.rest-client",
+        "github.vscode-github-actions",
+        "DavidAnson.vscode-markdownlint"
+      ]
+    }
+  },
+  "postCreateCommand": "make build",
+  "remoteUser": "node",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "installOhMyZsh": true,
+      "upgradePackages": true
+    },
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "version": "latest",
+      "enableNonRootDocker": true,
+      "moby": true
+    },
+    "ghcr.io/devcontainers/features/git:1": {
+      "ppa": true,
+      "version": "os-provided"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    },
+    "ghcr.io/devcontainers/features/python:1": {},
+    "ghcr.io/devcontainers/features/go:1": {
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
+      "minikube": "none"
+    },
+    "ghcr.io/eitsupi/devcontainer-features/jq-likes:2": {
+      "jq": "latest",
+      "yq": "latest"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers-contrib/features/apt-get-packages:1": {
+      "packages": "bash-completion xdg-utils pass sshpass"
+    },
+    "ghcr.io/devcontainers-extra/features/mkdocs:2": {
+      "plugins": "mkdocs-include-markdown-plugin mkdocs-macros-plugin mkdocs-material mkdocs-awesome-nav mkdocs-mermaid2-plugin"
+    },
+    "ghcr.io/devcontainers-extra/features/ansible:2": {},
+    "ghcr.io/devcontainers-extra/features/pandoc:1": {}
+  }
+}
